@@ -1,0 +1,44 @@
+.in-cnt {
+    // background-color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 125px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    max-width: 880px;
+    h2 {
+        font-family: "Nunito", sans-serif;
+        font-weight: 200;
+        padding: 15px 0;
+        margin: 0 auto;
+    }
+    input {
+        height: 45px;
+        width: 70%;
+        border-radius: 5px;
+        border: 1px solid rgba(19, 56, 233, 0.8407738095238095);
+        padding-left: 15px;
+        font-size: 16px;
+        border-bottom-width: 2px;
+        margin: 0 auto 20px;
+        transition: all 0.3s ease;
+        font-family: "Nunito", sans-serif;
+    }
+
+    button {
+        margin: 0 auto;
+        height: 45px;
+        margin-bottom: 25px;
+        font-family: "Nunito", sans-serif;
+        font-size: 19px;
+        width: 50%;
+        color: white;
+        background: rgb(19, 56, 233);
+        background: linear-gradient(90deg, rgba(19, 56, 233, 0.8407738095238095) 0%, rgba(0, 255, 235, 1) 100%);
+        border-radius: 5px;
+        padding: 0 15px;
+        transition: all 0.4s;
+        border: none;
+    }
+}
