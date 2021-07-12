@@ -36,8 +36,8 @@
 #I recommend [Node.js](https://nodejs.org/) v14+ to run.
 
 ### Firt you need to create your own MongoAtlas database and fill required fields in ./server/.env file
-#### NODE_ENV='development' DB=''SECRET_KEY='' BASE_URL='http://localhost:3000/' IP='128.0.0.2'
-#### as long as you test applications locally, you need to change ip staticli it you want to check unique users feature!
+#### NODE_ENV='development'  DB='use_mongoatlas_string_here'  SECRET_KEY='key_for_jwt' BASE_URL='http://localhost:3000/'  IP='128.0.0.2'
+#### as long as you test applications locally, you need to change ip staticli, if you want to check unique users feature!
 
 
 ##### Download project
