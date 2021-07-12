@@ -23,7 +23,7 @@ function NavBarMini({ userinfo, logoutdispatch }) {
   return (
     <>
       <div className="nav-bar">
-        <div className="img-cnt">
+        <div className="img-cnt" onClick={() => history.push('/')}>
           <img src={vileni} alt="vileni Logo" />
         </div>
         {clickbrg ? (
