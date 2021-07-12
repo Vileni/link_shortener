@@ -1,7 +1,7 @@
 ![Screenshot 2020-02-09 at 5 08 54 PM](https://res.cloudinary.com/vileni/image/upload/v1625945360/LinkShortener_wlf61h.png)
 
 
-# MERN STACK APPLICATION Vileni.ge
+# Vileni.GE MERN STACK APPLICATION 
 
 ## Important things I used to build the project
 - Javascript React✨
@@ -35,7 +35,9 @@
 
 #I recommend [Node.js](https://nodejs.org/) v14+ to run.
 
-### Firt you need to create your own MongoAtlas database and fill required fields in .env file
+### Firt you need to create your own MongoAtlas database and fill required fields in ./server/.env file
+### NODE_ENV='development' DB=''SECRET_KEY='' BASE_URL='http://localhost:3000/' IP='128.0.0.2'
+#### as long as you test applications locally, you need to change ip staticli it you want to check unique users feature!
 
 
 ##### Download project
