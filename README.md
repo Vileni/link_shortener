@@ -54,7 +54,7 @@ cd server
 npm install
 ```
 ```sh
-npm run start
+npm run start:dev
 ```
 ##### Start React app PORT=3000
 ```sh
