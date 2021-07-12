@@ -3,9 +3,9 @@ import validUrl from 'valid-url';
 import validator from 'validator';
 import shortid from 'shortid';
 import Url, { IUrl } from '../models/urlModel';
-import User from '@server/models/userModel';
-import catchAsync from '@server/utils/catchAsync';
-import AppError from '@server/utils/appError';
+import User from '../models/userModel';
+import catchAsync from '../utils/catchAsync';
+import AppError from '../utils/appError';
 
 // CREATES SHORT LINKS!
 const createShortUrl = catchAsync(
@@ -62,6 +62,11 @@ const redirect = catchAsync(
     // keeps analytics stats for user (e.g. links they visited)
 
     // 1) if there is user save info in users own document,
+    if (!link) {
+      return res.status(200).json({
+        status: 'NoLink',
+      });
+    }
     if (req.user) {
       const { user } = req;
       const { visited } = req.user;
@@ -77,11 +82,6 @@ const redirect = catchAsync(
       }
     }
 
-    if (!link) {
-      return res.status(404).json({
-        status: 'NoLink',
-      });
-    }
     // 2)check if link exists and send to frotend
     if (link) {
       const { visitorsIP } = link;

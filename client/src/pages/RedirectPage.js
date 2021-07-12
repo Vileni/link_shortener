@@ -2,20 +2,32 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import validator from 'validator';
+import { useState } from 'react';
+import ErrorLink from './../components/errorlink/ErrorLink';
 
 function RedirectPage() {
   const { id } = useParams();
+  const [url, SetUrl] = useState('');
   useEffect(() => {
     async function makeItHappen() {
       window.document.title = 'redirect';
       const res = await axios.get(`/api/v1/url/redirect/${id}`);
-      if (res) {
+      if (res && res.data.url) {
+        SetUrl(res.data.url);
         window.location.href = `${res.data.url}`;
+      } else {
+        SetUrl('error');
       }
     }
     makeItHappen();
   }, []);
-  return <div></div>;
+
+  if (!validator.isURL(url) && url === 'error') {
+    return <ErrorLink />;
+  } else {
+    return <div></div>;
+  }
 }
 
 export default RedirectPage;

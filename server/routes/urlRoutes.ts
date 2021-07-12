@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createShortUrl, getAllMyInfo, redirect } from '@controller/urlController';
-import { alreadyIn, logIn, protect } from '@server/controllers/userController';
+import { createShortUrl, getAllMyInfo, redirect } from '../controllers/urlController';
+import { alreadyIn, logIn, protect } from '../controllers/userController';
 
 const router = Router();
 

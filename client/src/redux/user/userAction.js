@@ -40,17 +40,21 @@ export const userReload = () => {
 export const fetchMe = (email, password) => {
   return async dispatch => {
     dispatch(fetchUserRequest());
-    const res = await axios.post('/api/v1/user/login', {
-      email,
-      password,
-    });
+    try {
+      const res = await axios.post('/api/v1/user/login', {
+        email,
+        password,
+      });
 
-    dispatch(
-      fetchUsersSuccess({
-        loading: false,
-        user: { ...res.data.data, status: 'success' },
-      })
-    );
+      dispatch(
+        fetchUsersSuccess({
+          loading: false,
+          user: { ...res.data.data, status: 'success' },
+        })
+      );
+    } catch (error) {
+      console.log("error");
+    }
   };
 };
 
@@ -58,18 +62,23 @@ export const registerMe = (name, email, password, confirmPassword) => {
   return async dispatch => {
     dispatch(fetchUserRequest());
     if ((name, email, password, confirmPassword)) {
-      const res = await axios.post('/api/v1/user/signup', {
-        name,
-        email,
-        password,
-        confirmPassword,
-      });
-      dispatch(
-        fetchUsersSuccess({
-          loading: false,
-          user: { ...res.data.data, status: 'success' },
-        })
-      );
+      try {
+        const res = await axios.post('/api/v1/user/signup', {
+          name,
+          email,
+          password,
+          confirmPassword,
+        });
+
+        dispatch(
+          fetchUsersSuccess({
+            loading: false,
+            user: { ...res.data.data, status: 'success' },
+          })
+        );
+      } catch (error) {
+        console.log('Error');
+      }
     }
   };
 };

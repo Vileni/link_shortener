@@ -1,0 +1,50 @@
+.error-cnt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    h1 {
+        font-family: "Nunito", sans-serif;
+        padding: 20px 30px;
+        background: rgb(19, 56, 233);
+        background: linear-gradient(90deg, rgba(19, 56, 233, 0.8407738095238095) 0%, rgba(0, 255, 235, 1) 100%);
+        color: white;
+        border-radius: 5px;
+        transition: all 0.4s;
+    }
+}
+
+$widthsmall: 600px;
+@media (max-width: $widthsmall) {
+    .error-cnt {
+        h1 {
+            font-size: 25px;
+        }
+    }
+}
+
+$widthmin: 448px;
+@media (max-width: $widthsmall) {
+    .error-cnt {
+        h1 {
+            font-size: 20px;
+        }
+    }
+}
+
+$smallest: 372px;
+@media (max-width: $smallest) {
+    .error-cnt {
+        h1 {
+            font-size: 14px;
+        }
+    }
+}
+// $smallestest: 340px;
+// @media (max-width: $smasmallestestllest) {
+//     .error-cnt {
+//         h1 {
+//             font-size: 14px;
+//         }
+//     }
+// }

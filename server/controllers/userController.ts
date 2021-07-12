@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { promisify } from 'util';
 import * as dotenv from 'dotenv';
-import catchAsync from '@utils/catchAsync';
-import AppError from '@utils/appError';
-import User, { IUser } from '@server/models/userModel';
+import catchAsync from '../utils/catchAsync';
+import AppError from '../utils/appError';
+import User, { IUser } from '../models/userModel';
 
 dotenv.config({ path: `${__dirname}/.env` });
 
@@ -34,7 +34,7 @@ const signUp = catchAsync(async (req: Request, res: Response, next: NextFunction
   if (password !== confirmPassword) {
     return next(new AppError('Confirm password is not same as password.', 401));
   }
-  
+
   const user = await User.create({
     email,
     name,
@@ -43,15 +43,13 @@ const signUp = catchAsync(async (req: Request, res: Response, next: NextFunction
   });
 
   if (user) {
-    createSendToken(user, 200, req, res);
-  } else {
-    next(new AppError('Sign up problem', 401));
+    return createSendToken(user, 200, req, res);
   }
+  return next(new AppError('Sign up problem', 401));
 });
 
 const logIn = catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void | NextFunction> => {
   const { email, password } = req.body;
-  console.log(email, password);
 
   // 1) Check if email and password exist
   if (!email || !password) {
@@ -67,7 +65,7 @@ const logIn = catchAsync(async (req: Request, res: Response, next: NextFunction)
   // 3) If everything ok, send token to client
   return createSendToken(user, 200, req, res);
 });
-const Me = catchAsync(async (req: Request|any, res: Response): Promise<void> => {
+const Me = catchAsync(async (req: Request | any, res: Response): Promise<void> => {
   const { id } = req.user;
   const me = await User.findById(id);
   res.status(200).json({
@@ -75,38 +73,36 @@ const Me = catchAsync(async (req: Request|any, res: Response): Promise<void> => 
     data: me,
   });
 });
-const protect = catchAsync(async (req: Request|any, res: Response, next: NextFunction): Promise<void | NextFunction> => {
-  // 1) Getting token and check if it's there
-  let token;
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    [, token] = req.headers.authorization.split(' ');
-  } else if (req.headers.cookie) {
-    [, token] = req.headers.cookie.split('=');
+const protect = catchAsync(
+  async (req: Request | any, res: Response, next: NextFunction): Promise<void | NextFunction> => {
+    // 1) Getting token and check if it's there
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      [, token] = req.headers.authorization.split(' ');
+    } else if (req.headers.cookie) {
+      [, token] = req.headers.cookie.split('=');
+    }
+
+    if (!token) {
+      return next(new AppError('You are not logged in! Please log in to get access.', 201));
+    }
+
+    // 2) Verification token
+
+    // @ts-ignore
+    const decoded: { id: string; iat: string } = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
+
+    // 3) Check if user still exists
+    const currentUser: IUser | null = await User.findById(decoded.id);
+    if (!currentUser) {
+      return next(new AppError('The user belonging to this token does no longer exist.', 401));
+    }
+
+    // GRANT ACCESS TO PROTECTED ROUTE
+    req.user = currentUser;
+    return next();
   }
-
-  if (!token) {
-    return next(new AppError('You are not logged in! Please log in to get access.', 201));
-  }
-
-  // 2) Verification token
-
-  // @ts-ignore
-  const decoded: { id: string; iat: string } = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
-
-  // 3) Check if user still exists
-  const currentUser: IUser | null = await User.findById(decoded.id);
-  if (!currentUser) {
-    return next(new AppError('The user belonging to this token does no longer exist.', 401));
-  }
-
-
-
-  // GRANT ACCESS TO PROTECTED ROUTE
-  req.user = currentUser;
-  return next();
-});
-
-
+);
 
 const logOut = catchAsync(async (req: Request, res: Response): Promise<void> => {
   res.cookie('jwt', 'You are loged out!', {
@@ -145,4 +141,4 @@ const alreadyIn = catchAsync(async (req: Request, res: Response, next: NextFunct
   return next();
 });
 
-export { signUp, logIn, protect, logOut,  alreadyIn, Me };
+export { signUp, logIn, protect, logOut, alreadyIn, Me };
