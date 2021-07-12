@@ -53,7 +53,7 @@ function Register({ signUp, userinfo }) {
 
   return (
     <form onSubmit={handleRegister}>
-      <div className="in-cnt">
+      <div className="in-cnt-r">
         <h2>Register</h2>
         <input
           type="text"

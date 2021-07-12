@@ -1,4 +1,4 @@
-.in-cnt {
+.in-cnt-r {
     // background-color: blue;
     display: flex;
     flex-direction: column;
@@ -40,5 +40,36 @@
         padding: 0 15px;
         transition: all 0.4s;
         border: none;
+    }
+}
+@media (max-height: 700px) {
+    .in-cnt-r {
+        margin-top: 70px;
+    }
+}
+@media (max-height: 629px) {
+    .in-cnt-r {
+        margin-top: 40px;
+    }
+}
+
+@media (max-height: 600px) {
+    .in-cnt-r {
+        margin-top: 70px;
+        h2 {
+            padding: 0;
+        }
+        input {
+            margin-bottom: 0;
+        }
+        button {
+            margin: 5px 0;
+        }
+    }
+}
+
+@media (max-height: 500px) {
+    .in-cnt-r {
+        margin-top: 10px;
     }
 }

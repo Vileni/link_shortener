@@ -43,3 +43,30 @@
         border: none;
     }
 }
+
+@media (max-height: 700px) {
+    .in-cnt {
+        margin-top: 100px;
+    }
+}
+@media (max-height: 530px) {
+    .in-cnt {
+        margin-top: 40px;
+    }
+}
+
+@media (max-height: 470px) {
+    .in-cnt {
+        margin-top: 70px;
+
+        h2 {
+            padding: 0;
+        }
+        input {
+            margin-bottom: 0;
+        }
+        button {
+            margin: 5px 0;
+        }
+    }
+}

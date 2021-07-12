@@ -1,5 +1,4 @@
 .in-cnt-f {
-    // background-color: blue;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -69,5 +68,15 @@ $desktop: 880px;
         font-family: "Nunito", sans-serif;
         font-size: 28px;
         color: #333;
+    }
+}
+@media (max-height: 700px) {
+    .short-cnt {
+        margin-top: 100px;
+    }
+}
+@media (max-height: 480px) {
+    .short-cnt {
+        margin-top: 50px;
     }
 }
