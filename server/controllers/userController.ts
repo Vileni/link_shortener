@@ -25,6 +25,7 @@ const createSendToken = (user: IUser, statusCode: number, req: Request, res: Res
 
   res.status(statusCode).json({
     status: 'success',
+    token,
     data: { linksCreated, visited, status, _id, email, name },
   });
 };
@@ -142,15 +143,16 @@ const alreadyIn = catchAsync(async (req: Request, res: Response, next: NextFunct
 });
 const beforeRedirect = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void | NextFunction> => {
-    const id = req.body.uid;
+    const token = req.body.jwt;
     // if there is no token then just continue it will not make troubles.
-    console.log(id, 'user tokeni from browser');
-    if (!id) {
+    if (!token) {
       return next();
     }
     // @ts-ignore
+    const decoded: { id: string; iat: string } = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
+    // @ts-ignore
     // 3) Check if user still exists
-    const currentUser: IUser | null = await User.findById(id);
+    const currentUser: IUser | null = await User.findById(decoded.id);
     if (!currentUser) {
       return next();
     }

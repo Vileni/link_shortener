@@ -12,8 +12,9 @@ function RedirectPage() {
   const [url, SetUrl] = useState('');
   useEffect(() => {
     async function makeItHappen() {
+      const jwt = localStorage.getItem('jwt');
       window.document.title = 'redirect';
-      const res = await axios.post(`/api/v1/url/redirect/${id}`);
+      const res = await axios.post(`/api/v1/url/redirect/${id}`, { jwt });
       if (res && res.data.url) {
         SetUrl(res.data.url);
         window.location = `${res.data.url}`;

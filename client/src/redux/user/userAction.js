@@ -24,6 +24,7 @@ export const onReload = user => {
 export const logOut = () => {
   return async dispatch => {
     const res = await axios.get('/api/v1/user/logout');
+    localStorage.removeItem('jwt');
     if (res) {
       dispatch({ type: FETCH_USER_LOGOUT });
     }
@@ -45,6 +46,7 @@ export const fetchMe = (email, password) => {
         email,
         password,
       });
+      localStorage.setItem('jwt', res.data.token);
 
       dispatch(
         fetchUsersSuccess({
@@ -53,7 +55,7 @@ export const fetchMe = (email, password) => {
         })
       );
     } catch (error) {
-      console.log("error");
+      console.log('error');
     }
   };
 };
