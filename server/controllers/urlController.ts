@@ -116,12 +116,4 @@ const getAllMyInfo = catchAsync(async (req: Request | any, res: Response): Promi
   res.status(200).json({ status: 'success', urls });
 });
 
-/** 
-//implimentation to track no authenticated users links.
-const getLonelyUrls = catchAsync(async (req: Request, res: Response): Promise<Response | void> => {
-const urls = await Url.find({ _id: 'adminId' });
-res.status(200).json({ status: 'success', urls });
- });
- */
-
 export { createShortUrl, redirect, getAllMyInfo };
