@@ -18,7 +18,7 @@ const createSendToken = (user: IUser, statusCode: number, req: Request, res: Res
   const token = signToken(user._id);
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + 10 * 60 * 60 * 1000),
-    httpOnly: true,
+    // httpOnly: true,
     // secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
   });
   const { linksCreated, visited, status, _id, email, name } = user as IUser;
@@ -140,5 +140,27 @@ const alreadyIn = catchAsync(async (req: Request, res: Response, next: NextFunct
 
   return next();
 });
+const beforeRedirect = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void | NextFunction> => {
+    const token = req.body.jwt;
+    // if there is no token then just continue it will not make troubles.
+    if (!token) {
+      return next();
+    }
+    // @ts-ignore
+    const decoded: { id: string; iat: string } = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
+    // 3) Check if user still exists
+    const currentUser: IUser | null = await User.findById(decoded.id);
+    if (!currentUser) {
+      return next();
+    }
 
-export { signUp, logIn, protect, logOut, alreadyIn, Me };
+    // GRANT ACCESS TO PROTECTED ROUTE
+    // @ts-ignore
+    req.user = currentUser;
+
+    return next();
+  }
+);
+
+export { signUp, logIn, protect, logOut, alreadyIn, Me, beforeRedirect };

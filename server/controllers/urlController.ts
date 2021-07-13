@@ -11,7 +11,7 @@ import AppError from '../utils/appError';
 const createShortUrl = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<Response | NextFunction | void> => {
     const { url } = req.body;
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3001/';
+    const baseUrl = process.env.BASE_URL as string;
 
     if (url) {
       if (!validator.isURL(url)) {
@@ -67,10 +67,13 @@ const redirect = catchAsync(
         status: 'NoLink',
       });
     }
+
     if (req.user) {
+      console.log('thre is user');
       const { user } = req;
       const { visited } = req.user;
       const { shortUrl } = link as IUrl;
+      console.log(visited, 'visited');
       if (link && user && !visited.includes(shortUrl)) {
         const { id } = req.user;
         await User.findOneAndUpdate(

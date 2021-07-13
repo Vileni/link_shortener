@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import validator from 'validator';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import './urlshortener.scss';
 
-function UrlShortener() {
+function UrlShortener({ userinfo }) {
   const [warn, SetWarn] = useState('Long Story Short');
   const [url, Seturl] = useState('');
   const [err, Seterr] = useState(false);
   const handleSubbmit = async e => {
     e.preventDefault();
-
-    try {
+    if (userinfo === 'success') {
       if (url.startsWith('http://') || url.startsWith('https://')) {
         if (validator.isURL(url)) {
           const res = await axios.post('/api/v1/url/create', {
@@ -30,7 +30,10 @@ function UrlShortener() {
         SetWarn('Valid Url Must starts With "https://" or "http://" ');
         Seterr(true);
       }
-    } catch (error) {}
+    } else {
+      SetWarn('Please Authenticate!');
+      Seterr(true);
+    }
   };
 
   return (
@@ -53,5 +56,13 @@ function UrlShortener() {
     </div>
   );
 }
+const mapStateToProps = state => {
+  return {
+    userinfo: state.user.user.status,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {};
+};
 
-export default UrlShortener;
+export default connect(mapStateToProps, mapDispatchToProps)(UrlShortener);

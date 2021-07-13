@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './register.scss';
 import validator from 'validator';
-
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerMe } from '../../redux';
