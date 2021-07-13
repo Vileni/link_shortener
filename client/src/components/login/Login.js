@@ -29,7 +29,7 @@ function Login({ fetchuser, userinfo }) {
     if (password.length < 2) {
       SetErrPassword(true);
     } else {
-      SetErrPassword(true);
+      SetErrPassword(false);
     }
     if (email.length > 5 && password.length > 2) {
       fetchuser(email, password);
