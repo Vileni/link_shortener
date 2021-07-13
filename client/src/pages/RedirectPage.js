@@ -12,16 +12,8 @@ function RedirectPage() {
   const [url, SetUrl] = useState('');
   useEffect(() => {
     async function makeItHappen() {
-      let res;
-      const user = await axios.get(`/api/v1/user/me`);
       window.document.title = 'redirect';
-      if (user.data.status === 'success') {
-        res = await axios.post(`/api/v1/url/redirect/${id}`, {
-          uid: user.data.data._id,
-        });
-      } else {
-        res = await axios.post(`/api/v1/url/redirect/${id}`);
-      }
+      const res = await axios.post(`/api/v1/url/redirect/${id}`);
       if (res && res.data.url) {
         SetUrl(res.data.url);
         window.location = `${res.data.url}`;

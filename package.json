@@ -7,11 +7,11 @@
     "start": "pm2 start dist/server.js",
     "kill": "pm2 kill",
     "list": "pm2 list",
-    "logs":"pm2 log",
-    "update":"pm2 update",
-    "save":"pm2 save",
+    "logs": "pm2 log",
+    "update": "pm2 update",
+    "save": "pm2 save",
     "build": "tsc",
-    "start:dev":"ts-node-dev --respawn --quiet ./server/server.ts"
+    "start:dev": "ts-node-dev --respawn --quiet ./server/server.ts"
   },
   "repository": {
     "type": "git",

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchLinks } from '../../redux';
 
 import './mystats.scss';
-function MyStats({ fetchMyLinks, links, linksVisited }) {
+function MyStats({ fetchMyLinks, links }) {
   useEffect(() => {
     fetchMyLinks();
   }, []);
@@ -35,35 +35,12 @@ function MyStats({ fetchMyLinks, links, linksVisited }) {
           </ul>
         </div>
       </div>
-      <div className="stats-cnt">
-        <div className="created-links">
-          <h3>Links Visited</h3>
-          <ul>
-            {linksVisited.length > 0 ? (
-              linksVisited.map((e, i) => (
-                <li key={i}>
-                  <div>
-                    <div>{e} </div>
-                  </div>
-                </li>
-              ))
-            ) : (
-              <li>
-                <div>
-                  <div>You have no visited links </div>
-                </div>
-              </li>
-            )}
-          </ul>
-        </div>
-      </div>
     </>
   );
 }
 const mapStateToProps = state => {
   return {
     links: state.link.links,
-    linksVisited: state.link.visited,
   };
 };
 
