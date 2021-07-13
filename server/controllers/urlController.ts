@@ -69,11 +69,9 @@ const redirect = catchAsync(
     }
 
     if (req.user) {
-      console.log('thre is user');
       const { user } = req;
       const { visited } = req.user;
       const { shortUrl } = link as IUrl;
-      console.log(visited, 'visited');
       if (link && user && !visited.includes(shortUrl)) {
         const { id } = req.user;
         await User.findOneAndUpdate(
