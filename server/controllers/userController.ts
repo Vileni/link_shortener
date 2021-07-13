@@ -142,20 +142,18 @@ const alreadyIn = catchAsync(async (req: Request, res: Response, next: NextFunct
 });
 const beforeRedirect = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void | NextFunction> => {
-    const token = req.body.jwt;
+    const id = req.body.uid;
     // if there is no token then just continue it will not make troubles.
-    if (!token) {
+    console.log(id, 'user tokeni from browser');
+    if (!id) {
       return next();
     }
     // @ts-ignore
-    const decoded: { id: string; iat: string } = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
     // 3) Check if user still exists
-    const currentUser: IUser | null = await User.findById(decoded.id);
+    const currentUser: IUser | null = await User.findById(id);
     if (!currentUser) {
       return next();
     }
-
-    // GRANT ACCESS TO PROTECTED ROUTE
     // @ts-ignore
     req.user = currentUser;
 
