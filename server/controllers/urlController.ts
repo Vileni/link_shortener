@@ -27,7 +27,6 @@ const createShortUrl = catchAsync(
       if (req.user) {
         // @ts-ignore
         const { id: owner } = req.user;
-
         const link = await Url.create({ url, ending, shortUrl, owner });
         await User.findByIdAndUpdate({ _id: owner }, { $push: { linksCreated: link.id } });
         return res.status(201).json({
@@ -35,16 +34,8 @@ const createShortUrl = catchAsync(
           link: link.shortUrl,
         });
       }
-      // default owner if it ganarated without authentication
-      // if it is needed we can easily track no authenticated users links
-      const defaultOwer = '60e49af6f1db8b1c98b08e65';
-      const link = await Url.create({ url, ending, shortUrl, owner: defaultOwer });
-      return res.status(201).json({
-        status: 'success',
-        link: link.shortUrl,
-      });
     }
-    return next(new AppError('Please Provide URL', 400));
+    return next(new AppError('Please Autenticate', 400));
   }
 );
 

@@ -18,14 +18,13 @@ const createSendToken = (user: IUser, statusCode: number, req: Request, res: Res
   const token = signToken(user._id);
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + 10 * 60 * 60 * 1000),
-    // httpOnly: true,
+    httpOnly: true,
     // secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
   });
   const { linksCreated, visited, status, _id, email, name } = user as IUser;
 
   res.status(statusCode).json({
     status: 'success',
-    token,
     data: { linksCreated, visited, status, _id, email, name },
   });
 };
