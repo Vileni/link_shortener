@@ -11,54 +11,50 @@
 
 
 #  Design decision
-  #### I used SPA React Application, thus I chose to use Redux to mange State.
-  #### on Front-end there are 4 pages.
-  #### 1)signup page You can register there.
-  #### 2)login page You can login there.
-  #### 3)mystats page You can track your links there.
-  #### 4)main page You can create links there.
+  I used SPA React Application, thus I chose to use Redux to mange State.
+  on Front-end there are 4 pages.<br />
+  * Signup page You can register there.<br />
+  * Login page You can login there.<br />
+  * Mystats page You can track your links there.<br />
+  * Main page You can create links there.
   
-  #### on main page you can create short links but as long as you are not authenticated you can't track your link.
-  #### if you do authenticate then every link will be tracked by you. (check mystats page)
-  #### using Mongodb and Mongoose I managed to impliment user authorization and authentication.
-  #### I made relation beetween Users and links,so all link belongs to user who created it.
-  #### about unique visits and visits. if there is visit on link the visits field of links in database incriments by 1,
-  #### then NodeJs checks in database URLs visitorsIP field if it do not contain visitors ip then appends it 
-  #### and incriments uniqueVisitors field by 1.
+  On main page you can create short links, but as long as you are not authenticated you can't create short link.
+  If you do authenticate then every link, created by you will be tracked by you (check mystats page).
+  Using Mongodb and Mongoose I managed to impliment user authorization and authentication.
+  I made relation beetween Users and Links, so all link belongs to user who created it.
+  About unique visits and just visits. if there is visit on link the visits field of links in database incriments by 1,
+  then server checks in database URL's visitorsIP field, if it don't contain user ip, it incriments uniqueVisitors field by 1, then ip will be push to VisitorsIP array field.
+  So, application checks unique visits by Ip.
   
-  
-  
+# Do you want to try it yourself?
+
+#I recommend to install [Node.js](https://nodejs.org/) v14+ to run.
+
+Firt you need to create your own MongoAtlas database and fill required fields in ./server/.env file.
+* NODE_ENV="development"
+* DB="MongoDB string here" Create your Private [MongoDB](https://www.mongodb.com/) database.
+* SECRET_KEY="Create hashed key for Json Web Token"
+* BASE_URL="http://localhost:3000/" Use Frontend Server Address.
+* IP="128.0.0.2" As long as you test applications locally, you need to change ip by hand and restart Node js Server, if you want to check unique users feature!
 
 
-
-## Do you want to try it yourself?
-
-#I recommend [Node.js](https://nodejs.org/) v14+ to run.
-
-### Firt you need to create your own MongoAtlas database and fill required fields in ./server/.env file
-#### NODE_ENV='development'  DB='use_mongoatlas_string_here'  SECRET_KEY='key_for_jwt' BASE_URL='http://localhost:3000/'  IP='128.0.0.2'
-#### as long as you test applications locally, you need to change ip staticli, if you want to check unique users feature!
-
-
-##### Download project
+## Download project
 ```sh
 git clone https://github.com/Vileni/link_shortener.git
 ```
-##### Start Nodejs server PORT=3001
+#### Start Nodejs server port 3001
 
 ```sh
 cd link_shortener 
 ```
-```sh
-cd server 
-```
+
 ```sh
 npm install
 ```
 ```sh
 npm run start:dev
 ```
-##### Start React app PORT=3000
+#### Start React app port 3000
 ```sh
 cd link_shortener 
 ```
@@ -77,7 +73,3 @@ your preferred browser.
 ```sh
 127.0.0.1:3000
 ```
-
-## License
-Open source 
-*USE AS YOU WANT!*
