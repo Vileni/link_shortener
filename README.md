@@ -1,7 +1,7 @@
 ![Screenshot 2020-02-09 at 5 08 54 PM](https://res.cloudinary.com/vileni/image/upload/v1625945360/LinkShortener_wlf61h.png)
 
 
-# Vileni.GE MERN STACK APPLICATION 
+# MERN STACK APPLICATION 
 
 ## Important things I used to build the project
 - Javascript React✨
